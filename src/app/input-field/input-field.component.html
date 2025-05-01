@@ -1,0 +1,13 @@
+<div>
+    <label>
+        {{ label }}
+    </label>
+    <input
+        type="{{type}}"
+        [value]="value"
+        (input)="onInput($event)"
+        (blur)="onTouched()"/>
+        @if(control && control.invalid && (control.dirty || control.touched)){
+            {{ control.errors | json }}
+        }
+</div>

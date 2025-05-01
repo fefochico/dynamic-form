@@ -1,0 +1,31 @@
+<h5>Dynamic form</h5>
+<app-dynamic-form [formConfig]="fieldsConfig" (result)="showResult($event)">
+</app-dynamic-form>
+{{ result1 | json }}
+
+<h5>Static form</h5>
+<form [formGroup]="localForm" (ngSubmit)="onSubmit()">
+        <text-input-field
+            formControlName="name"
+            [required]="true"
+            (change)="onChange($event)"
+            label="Name">
+        </text-input-field>
+        <number-input-field
+          formControlName="edad"
+          [min]="0"
+          [max]="99"
+          [required]="true"
+          (change)="onChange($event)"
+          label="Edad">
+        </number-input-field>
+        <select-field
+            formControlName="color"
+            [required]="true"
+            (change)="onChange($event)"
+            label="Color"
+            [options]="colorOptions">
+        </select-field>
+  <button type="submit">Submit</button>
+</form>
+{{ result2 | json }}

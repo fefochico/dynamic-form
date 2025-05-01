@@ -1,0 +1,14 @@
+<div>
+    <label>{{ label }}</label>
+    <select [value]="value" (change)="onSelect($event)" (blur)="onTouched()">
+        @for(opt of options; track opt.value){
+            <option [value]="opt.value">
+                {{ opt.label }}
+            </option>
+        }
+        <option value="">Select an option</option>
+    </select>
+    @if(control && control.invalid && (control.dirty || control.touched)){
+        {{ control.errors | json }}
+    }
+</div>
