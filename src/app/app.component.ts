@@ -1,21 +1,27 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SelectFieldComponent } from './select-field/select-field.component';
+import { SelectFieldComponent } from './fields/select-field/select-field.component';
 import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
 import { JsonPipe } from '@angular/common';
 import { FieldConfig } from './field-config';
-import { TextInputFieldComponent } from './text-input-field/text-input-field.component';
-import { NumberInputFieldComponent } from './number-input-field/number-input-field.component';
+import { TextInputFieldComponent } from './fields/text-input-field/text-input-field.component';
+import { NumberInputFieldComponent } from './fields/number-input-field/number-input-field.component';
+import { TranslateService } from './services/translation.service';
+import { DateInputFieldComponent } from './fields/date-input-field/date-input-field.component';
 
 
 @Component({
   selector: 'app-root',
-  imports: [JsonPipe, FormsModule, ReactiveFormsModule, 
+  imports: [
+    JsonPipe, 
+    FormsModule, 
+    ReactiveFormsModule, 
     DynamicFormComponent, 
     TextInputFieldComponent, 
     NumberInputFieldComponent, 
-    SelectFieldComponent
-  ],  // Importa los componentes aquí
+    SelectFieldComponent,
+    DateInputFieldComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -23,6 +29,7 @@ export class AppComponent {
   result1: any;
   result2: any;
   localForm!: FormGroup;
+  minStartDateInEndDate: Date | null = null;
   public colorOptions =  [
     { value: '1', label: 'Red' },
     { value: '2', label: 'Green' },
@@ -30,32 +37,32 @@ export class AppComponent {
   ];
   fieldsConfig: FieldConfig[] = [
     {
-      defaultValue: '',
-      name: 'nombre',
-      label: 'Nombre',
       component: TextInputFieldComponent,
-      validators: {
+      config: {
+        defaultValue: '',
+        name: 'nombre',
+        label: 'Nombre',
         required: true
       }
     },
     {
-      defaultValue: '',
-      name: 'edad',
-      label: 'Edad',
       component: NumberInputFieldComponent,
-      validators: {
+      config: {
+        defaultValue: '',
+        name: 'edad',
+        label: 'Edad',
         required: true,
         min: 0,
         max: 10,
       }
     },
     {
-      defaultValue: "",
-      name: 'colorFavorito',
-      label: 'Color Favorito',
       component: SelectFieldComponent,
-      validators: {
-          required: true,
+      config: {
+        defaultValue: "",
+        name: 'colorFavorito',
+        label: 'Color Favorito',
+        required: true,
       },
       options: [
           { value: '1', label: 'Rojo' },
@@ -64,11 +71,13 @@ export class AppComponent {
       ]
     }
   ];
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private translateService: TranslateService) {
     this.localForm = this.fb.group({
       name: new FormControl(''),
       edad: new FormControl(null),
-      color: new FormControl(null)
+      color: new FormControl(null),
+      fechainicio: new FormControl(null),
+      fechafin: new FormControl(null),
     });
   }
 
@@ -86,5 +95,13 @@ export class AppComponent {
 
   onChange($event: any) {
     console.log($event);
+  }
+
+  onChangeStartDate(){
+    this.minStartDateInEndDate = this.localForm.get('fechainicio')?.value;
+  }
+
+  getMinDate(){
+    return this.localForm.get('fechainicio')?.value;
   }
 }

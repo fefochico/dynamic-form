@@ -5,6 +5,9 @@
     <input
         type="{{type}}"
         [value]="value"
+        [min]="min"
+        [max]="max"
+        [required]="required"
         (input)="onInput($event)"
         (blur)="onTouched()"/>
         @if(control && control.invalid && (control.dirty || control.touched)){

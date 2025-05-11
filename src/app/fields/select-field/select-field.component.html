@@ -6,7 +6,7 @@
                 {{ opt.label }}
             </option>
         }
-        <option value="">Select an option</option>
+        <option value="">{{translateService.getValue('select') | async}}</option>
     </select>
     @if(control && control.invalid && (control.dirty || control.touched)){
         {{ control.errors | json }}

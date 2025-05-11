@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, forwardRef, inject, Input } from '@angular/core';
+import { TranslateService } from '../../services/translation.service';
 import { AbstractControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -40,6 +41,8 @@ export class SelectFieldComponent {
     //throw new Error('Method not implemented.');
   }
   //Fin ControlValueAccessor
+
+  public translateService= inject(TranslateService);
 
   onSelect(event: any) {
     const newValue = event.target.value;

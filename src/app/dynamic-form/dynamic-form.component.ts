@@ -20,22 +20,22 @@ export class DynamicFormComponent implements OnInit, AfterViewInit{
   ngOnInit(): void {
     this.form= this.fb.group({});
     this.formConfig.forEach((fieldConfig) => {
-      this.form.addControl(fieldConfig.name, this.fb.control(fieldConfig.defaultValue));
+      this.form.addControl(fieldConfig.config.name, this.fb.control(fieldConfig.config.defaultValue? fieldConfig.config.defaultValue : null));
     })
   }
   
   ngAfterViewInit(): void {
     this.formConfig.forEach((fieldConfig) => {
       const componentRef = this.container.createComponent(fieldConfig.component, { injector: this.injector });
-      componentRef.instance.label = fieldConfig.label;
-      componentRef.instance.required = fieldConfig.validators?.required? true : false;
-      componentRef.instance.min = fieldConfig.validators?.min;
-      componentRef.instance.max = fieldConfig.validators?.max;
+      const properties: (keyof typeof fieldConfig.config)[] = Object.keys(fieldConfig.config) as (keyof typeof fieldConfig.config)[];
+      properties.forEach((property) => {
+        componentRef.instance[property] = fieldConfig.config[property];  
+      });
 
       if(fieldConfig.options) {
         componentRef.instance.options = fieldConfig.options;
       }
-      const control = this.form.get(fieldConfig.name);
+      const control = this.form.get(fieldConfig.config.name);
       //enlaza la informacion del FormControl con el componente
       if (control) { 
         componentRef.instance.registerOnChange((value: any) => {

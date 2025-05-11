@@ -3,22 +3,22 @@ import { Component, forwardRef, Input } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
 
 @Component({
-  selector: 'input-field',
+  selector: 'base-input-field',
   imports: [CommonModule],
   providers: [{
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputFieldComponent),
+      useExisting: forwardRef(() => BaseInputFieldComponent),
       multi: true
   },
   {
     provide: NG_VALIDATORS,
-    useExisting: forwardRef(() => InputFieldComponent),
+    useExisting: forwardRef(() => BaseInputFieldComponent),
     multi: true
   }],
-  templateUrl: './input-field.component.html',
-  styleUrl: './input-field.component.scss'
+  templateUrl: './base-input-field.component.html',
+  styleUrl: './base-input-field.component.scss'
 })
-export class InputFieldComponent implements ControlValueAccessor{
+export class BaseInputFieldComponent implements ControlValueAccessor{
   @Input() label: string = '';
   @Input() required: boolean = false;
   @Input() min: number | undefined;

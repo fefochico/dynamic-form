@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, forwardRef } from '@angular/core';
 import { AbstractControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from '@angular/forms';
-import { InputFieldComponent } from '../input-field/input-field.component';
+import { BaseInputFieldComponent } from '../base-input-field/base-input-field.component';
 
 @Component({
   selector: 'text-input-field',
@@ -16,10 +16,10 @@ import { InputFieldComponent } from '../input-field/input-field.component';
     useExisting: forwardRef(() => TextInputFieldComponent),
     multi: true
   }],
-  templateUrl: '../input-field/input-field.component.html',
-  styleUrl: '../input-field/input-field.component.scss'
+  templateUrl: '../base-input-field/base-input-field.component.html',
+  styleUrl: '../base-input-field/base-input-field.component.scss'
 })
-export class TextInputFieldComponent extends InputFieldComponent {
+export class TextInputFieldComponent extends BaseInputFieldComponent {
   override type: string = 'text';
 
   constructor() {

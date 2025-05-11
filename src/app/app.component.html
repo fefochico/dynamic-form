@@ -26,6 +26,19 @@
             label="Color"
             [options]="colorOptions">
         </select-field>
+        <date-input-field
+          formControlName="fechainicio"
+          [required]="true"
+          (change)="onChangeStartDate()"
+          label="Fecha inicio">
+        </date-input-field>
+        <date-input-field
+        formControlName="fechafin"
+        [required]="true"
+        [min]="getMinDate()"
+        (change)="onChange($event)"
+        label="Fecha fin">
+      </date-input-field>
   <button type="submit">Submit</button>
 </form>
 {{ result2 | json }}
